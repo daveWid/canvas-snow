@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8" />
+	<title>Snow :: Javascript and Canvas</title>
+
+	<link rel="stylesheet" href="http://github.com/daveWid/canvas-snow/raw/master/snow.css" media="screen" type="text/css">
+	<style type="text/css">
+		body{
+			color:#FFF;
+		}
+		#col{
+			width:700px;
+			margin: 0 auto;
+			position:relative;
+			z-index:3;
+			padding-top:20px;
+		}
+		#ribbon{
+			position: absolute; top: 0; right: 0; border: 0;z-index:2;
+		}
+		pre { background: #000; color: #fff; padding: 15px;}
+		h1{ margin-top:0; }
+	</style>
+
+	<script type="text/javascript" src="http://github.com/daveWid/canvas-snow/raw/master/gradientBackground.js"></script>
+	<script type="text/javascript" src="http://github.com/daveWid/canvas-snow/raw/master/rectangleEmitter.js"></script>
+	<script type="text/javascript" src="http://github.com/daveWid/canvas-snow/raw/master/snow.js"></script>
+	<script type="text/javascript" src="http://github.com/daveWid/canvas-snow/raw/master/init.js"></script>
+</head>
+<body onLoad="init()">
+	<div id="container">
+		<canvas id="background" width="960" height="300"></canvas>
+		<canvas id="snowfall" width="960" height="300"></canvas>
+	</div>
+
+	<a href="http://github.com/daveWid/canvas-snow"><img id="ribbon" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+
+	<div id="col">
+	<h1>Snowfall using the Canvas and Javascript</h1>
+
+	<h3>Here is a quick test of my canvas/javascript snowfall. Happy Holidays!!</h3>
+
+	<p><em>You are going to need a canvas enabled browser for this to show up...</em></p>
+
+    <p>Fork my project with the ribbon on the right. You can also clone the project with <a href="http://git-scm.com">Git</a>
+      by running:
+      <pre>$ git clone git://github.com/daveWid/canvas-snow</pre>
+    </p>
+
+    </div>
+</body>
+</html>
