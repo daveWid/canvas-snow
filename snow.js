@@ -74,7 +74,7 @@ var snow = {
 	 * Taken from the Flint particle system....
 	 */
 	action:function(){
-		this.velocity.x += (Math.random() - 0.5) * 0.25;
+		this.velocity.x += (Math.random() - 0.5) * 0.1;
 	},
 
 	/**
