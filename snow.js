@@ -1,23 +1,32 @@
-/**
- * The Snow particle
- */
-function Snow(){
-	this.isDead = false;
-	this.x = 0;
-	this.y = 0;
-	this.alpha = 0.5;
-	this.radius = 3;
-	this.velocity = {
-		'x': 0,
-		'y': 2,
-	};
-	this.canvasHeight;
+var snow = {
+	/**
+	 * float  The current x position
+	 */
+	x: 0,
 
-	this.action();
-}
+	/**
+	 * float  The current y position
+	 */
+	y: 0,
 
-// Methods
-Snow.prototype = {
+	/**
+	 * float  Alpha
+	 */
+	alpha: 0.5,
+
+	/**
+	 * float  The radius of the circle.
+	 */
+	radius: 3,
+
+	/**
+	 * Velocity for the particle.
+	 */
+	velocity: {
+		x: 0,
+		y: 2
+	},
+
 	/**
 	 * Draws the particle onto the canvas in context.
 	 *
@@ -36,10 +45,8 @@ Snow.prototype = {
 	update:function(){
 		this.x += this.velocity.x
 		this.y += this.velocity.y;
-		
-		if (this.y > this.canvasHeight){
-			this.isDead = true;
-		}
+
+
 	},
 
 	/**
@@ -55,6 +62,11 @@ Snow.prototype = {
 
 		this.alpha = this.randomRange(0.3, 1);
 		this.radius = this.randomRange(1, 3);
+
+		this.velocity = {
+			x: this.randomRange(-0.25, 0.25),
+			y: this.randomRange(0.75, 1.5)
+		}
 	},
 
 	/**
