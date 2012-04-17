@@ -4,17 +4,49 @@
 	<meta charset="utf-8" />
 	<title>Snow :: Javascript and Canvas</title>
 
-	<link rel="stylesheet" href="snow.css" media="screen" type="text/css">
+	<style type="text/css">
+		body {
+			margin:0;
+			padding:0;
+		}
 
-	<script type="text/javascript" src="gradientBackground.js"></script>
-	<script type="text/javascript" src="rectangleEmitter.js"></script>
-	<script type="text/javascript" src="snow.js"></script>
-	<script type="text/javascript" src="init.js"></script>
+		#snowfall {
+			background-color: #030726;
+			background-image: -webkit-gradient(linear, left top, left bottom, from(#030726), to(#0B1A58));
+			background-image: -webkit-linear-gradient(top, #030726, #0B1A58);
+			background-image: -moz-linear-gradient(top, #030726, #0B1A58);
+			background-image: -ms-linear-gradient(top, #030726, #0B1A58);
+			background-image: -o-linear-gradient(top, #030726, #0B1A58);
+			background-image: linear-gradient(to bottom, #030726, #0B1A58);
+
+		}
+	</style>
+
+	<script>
+		var init = function(){
+			// Resize the canvases)
+			var canvas = document.getElementById("snowfall");
+
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+
+			// Now the emitter
+			var emitter = Object.create(rectangleEmitter);
+			emitter.setCanvas(canvas);
+			emitter.setBlastZone(0, -10, canvas.width, 1);
+			emitter.particle = snow;
+			emitter.runAhead(60);
+			emitter.start(30);
+		};
+	</script>
+
+	<script src="rectangleEmitter.js"></script>
+	<script src="snow.js"></script>
+
 </head>
 <body onLoad="init()">
 	<div id="container">
-		<canvas id="snowfall" width="960" height="300"></canvas>
-		<canvas id="background" width="960" height="300"></canvas>
+		<canvas id="snowfall"></canvas>
 	</div>
 </body>
 </html>
