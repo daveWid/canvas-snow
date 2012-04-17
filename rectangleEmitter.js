@@ -1,46 +1,77 @@
-/**
- * A particle emitter that has a rectangle emitter zone.
- *
- * @param	canvas	The canvas
- * @param	x	The x-coord
- * @param	y	The y-coord
- * @param	width	The width
- * @param	height	The height
- */
-function RectangleEmitter(canvas, x, y, width, height){
-	/** The canvas. */
-	this.canvas = canvas;
-
-	/** The 2d canvas context. */
-	this.canvasContext = this.canvas.getContext('2d');
-
-	/** The blase Zone for the particles. */
-	this.blastZone = {
-		'x':x,
-		'y':y,
-		'width':width,
-		'height':height
-	};
-
-	/** The type of particle to create. */
-	this.particle;
-
-	/** The list of particles in the emitter. */
-	this.particles = [];
-
-	/** The max number of particles. */
-	this.maxParticles = 500;
-
-	/** The intervalID for the FPS interval */
-	this.fpsId;
-
-	/** The interval ID for the seconds tick. */
-	this.tickId;
-};
-
-RectangleEmitter.prototype = {
+var rectangleEmitter = {
 	/**
-	 * Starts the emitter.
+	 * The canvas object
+	 */
+	canvas: null,
+
+	/**
+	 * CanvasContext  The canvas context object
+	 */
+	context: null,
+
+	/**
+	 * Object The blast zone for particles.
+	 */
+	blastZone: {
+		x: 0,
+		y: 0,
+		width: 800,
+		height: 600
+	},
+
+	/**
+	 * Particle The type of particle to create.
+	 */
+	particle: null,
+
+	/**
+	 * array The list of particles in the emitter.
+	 */
+	particles: [],
+
+	/**
+	 * The max number of particles.
+	 */
+	maxParticles: 1000,
+
+	/**
+	 * The intervalID for the FPS interval
+	 */
+	fpsId: null,
+
+	/**
+	 * The interval ID for the seconds tick.
+	 */
+	tickId: null,
+
+	/**
+	 * Sets the canvas object.
+	 *
+	 * @param canvas DOMCanvasElement  The canvas to draw on.
+	 */
+	setCanvas: function(canvas){
+		this.canvas = canvas;
+		this.context = canvas.getContext('2d');
+	},
+
+	/**
+	 * Sets the blast zone.
+	 *
+	 * @param x      int  The x coord
+	 * @param y      int  The y-coor
+	 * @param width  int  The width
+	 * @param height int  The height
+	 */
+	setBlastZone: function(x, y, width, height){
+		this.blastZone = {
+			'x': x,
+			'y': y,
+			'width': width,
+			'height': height
+		};
+	},
+
+	/** Starts the emitter.
 	 *
 	 * @param	fps	The frame rate or 30 by default
 	 */
@@ -69,8 +100,7 @@ RectangleEmitter.prototype = {
 	 * Clears off the particles.
 	 */
 	clear:function(){
-		var c = this.canvas;
-		this.canvasContext.clearRect(0, 0, c.width, c.height);
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	},
 
 	/**
@@ -80,9 +110,8 @@ RectangleEmitter.prototype = {
 	 */
 	addParticle:function(particle){
 		if (this.particles.length < this.maxParticles){
-			var p = new particle();
+			var p = Object.create(particle);
 			p.randomize(this.blastZone);
-			p.canvasHeight = this.canvas.height;		
 
 			// Add the particle
 			this.particles.push(p);
@@ -97,7 +126,7 @@ RectangleEmitter.prototype = {
 
 		var i = this.particles.length;
 		while (i--){
-			this.particles[i].draw(this.canvasContext);
+			this.particles[i].draw(this.context);
 		}
 	},
 
@@ -113,7 +142,7 @@ RectangleEmitter.prototype = {
 			p.update();
 
 			// Remove the particle if it is "dead"
-			if (p.isDead){
+			if (p.y > this.canvas.height){
 				this.particles.splice(i, 1);
 			}
 		}
@@ -127,6 +156,17 @@ RectangleEmitter.prototype = {
 		
 		while(i--){
 			this.particles[i].action();
+		}
+	},
+
+	/**
+	 * Run the action ahead the number of seconds (so the screen isn't blank on init).
+	 *
+	 * @param seconds int  The number of seconds to run ahead.
+	 */
+	runAhead: function(seconds){
+		for (i = 0; i < seconds; i += 1){
+			this.frameUpdate(this);
 		}
 	},
 
@@ -146,8 +186,8 @@ RectangleEmitter.prototype = {
 	 *
 	 * @param	self	The reference to the emitter that is lost during setInterval.
 	 */
-	 tick:function(self){
-	 	self.applyActions();
-	 }
+	tick:function(self){
+		self.applyActions();
+	}
 
 };
